@@ -12,7 +12,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    outputs:
+      version: ${{ steps.version.outputs.version }}
 
     steps:
       - name: Checkout code
@@ -24,22 +29,7 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
           cache: 'gradle'
+        run: ./gradlew build --no-daemon
 
-      - name: Get version from build.gradle
-        id: get-version
-        run: |
-          echo "VERSION=$(grep 'version' build.gradle | awk -F '[ =]' '{print $3}')" >> $GITHUB_ENV
-
-
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          tags: |
-            ${{ github.repository }}:${{ env.VERSION }}
-            ${{ github.repository }}:${{ env.VERSION }}-RC
+      - name: Build with Gradle
+        run: ./gradlew build --no-daemon
