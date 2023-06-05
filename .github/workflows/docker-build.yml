@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
-          distributio: 'corretto'
+          distribution: 'corretto'
           cache: 'gradle'
 
       - name: Get version from build.gradle
