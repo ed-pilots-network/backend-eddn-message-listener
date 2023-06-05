@@ -6,6 +6,8 @@ on:
       - main
       - development
   pull_request:
+    types:
+      -closed
     branches:
       - main
       - development
@@ -41,3 +43,27 @@ jobs:
 
       - name: Execute Gradle build
         run: ./gradlew build
+
+  containerize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get version from build.gradle
+        id: get-version
+        run: echo "VERSION=$(grep -oP "version\s*=\s*'\K[^']+" build.gradle)" >> $GITHUB_ENV
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: |
+            ${{ github.repository }}:${{ env.VERSION }}
+            ${{ github.repository }}:${{ env.VERSION }}
