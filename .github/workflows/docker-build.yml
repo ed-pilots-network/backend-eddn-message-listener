@@ -39,5 +39,5 @@ jobs:
           file: ./Dockerfile
           push: false
           tags: |
-            ${{ github.repository }}:${{ steps.get-version.outputs.version }}
-            ${{ github.repository }}:${{ steps.get-version.outputs.version }}-RC
+            ed-pilots-network/backend-eddn-message-listener:${{ steps.get-version.outputs.version }}
+            ed-pilots-network/backend-eddn-message-listener:${{ steps.get-version.outputs.version }}-RC
