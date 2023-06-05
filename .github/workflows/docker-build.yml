@@ -26,7 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
           cache: 'gradle'
-        run: ./gradlew build --no-daemon
 
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
