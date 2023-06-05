@@ -16,9 +16,6 @@ jobs:
       matrix:
         os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
-    outputs:
-      version: ${{ steps.version.outputs.version }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
