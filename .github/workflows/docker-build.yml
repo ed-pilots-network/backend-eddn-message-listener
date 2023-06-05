@@ -27,7 +27,9 @@ jobs:
 
       - name: Get version from build.gradle
         id: get-version
-        run: echo "::set-output name=version::$(grep 'version' build.gradle | awk -F '[ =]' '{print $3}')"
+        run: |
+          echo "VERSION=$(grep 'version' build.gradle | awk -F '[ =]' '{print $3}')" >> $GITHUB_ENV
+
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
@@ -39,5 +41,5 @@ jobs:
           file: ./Dockerfile
           push: false
           tags: |
-            ed-pilots-network/backend-eddn-message-listener:${{ steps.get-version.outputs.version }}
-            ed-pilots-network/backend-eddn-message-listener:${{ steps.get-version.outputs.version }}-RC
+            ${{ github.repository }}:${{ env.VERSION }}
+            ${{ github.repository }}:${{ env.VERSION }}-RC
