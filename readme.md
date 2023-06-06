@@ -36,7 +36,7 @@ The project adheres to Domain-Driven Design (DDD) principles.
 
 ```
 src
-└── main
+├── main
 ├── java
 │   └── com
 │       └── example
@@ -49,7 +49,7 @@ src
 │               ├── configuration
 │               ├── domain
 │               │   ├── model
-│               │   └── repository
+│               │   ├── repository
 │               │   └── util
 │               ├── infrastructure
 │               │   ├── adapter
@@ -57,7 +57,7 @@ src
 │               │       ├── entity
 │               │       └── repository
 │               └── StationsApplication.java
-└── resources
+├── resources
 ├── application.properties
 └── ...
 ```
