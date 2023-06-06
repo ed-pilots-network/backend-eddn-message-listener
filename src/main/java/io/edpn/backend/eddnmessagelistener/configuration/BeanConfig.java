@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.retry.support.RetryTemplate;
 
@@ -19,10 +18,10 @@ public class BeanConfig {
                                                  @Qualifier("eddnRetryTemplate") RetryTemplate retryTemplate,
                                                  ObjectMapper objectMapper,
                                                  KafkaTopicHandler kafkaTopicHandler,
-                                                 KafkaTemplate<String, JsonNode> jsonNodekafkaTemplate,
-                                                 MongoTemplate mongoTemplate) {
-        return new EddnMessageHandler(taskExecutor, retryTemplate, objectMapper, kafkaTopicHandler, jsonNodekafkaTemplate, mongoTemplate);
+                                                 KafkaTemplate<String, JsonNode> jsonNodekafkaTemplate) {
+        return new EddnMessageHandler(taskExecutor, retryTemplate, objectMapper, kafkaTopicHandler, jsonNodekafkaTemplate);
     }
+
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();

@@ -34,25 +34,12 @@ services:
       zookeeper:
         condition: service_healthy
 
-  mongodb:
-    image: "mongo:5.0"
-    env_file:
-      - .env
-    volumes:
-      - "mongodb:/data/db"
-    healthcheck:
-      test: echo 'db.stats().ok' | mongo mongodb:27017/test --quiet
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 0s
-
   eddn-message-listener:
     build:
       context: .
       dockerfile: dockerfile
-    env_file:
-      - .env
+    environment:
+      - KAFKA_URL=kafka:9092
     healthcheck:
       test: "curl --fail --silent eddn-message-listener:8080/actuator/health | grep UP || exit 1"
       interval: 20s
@@ -62,13 +49,9 @@ services:
     depends_on:
       kafka:
         condition: service_healthy
-      mongodb:
-        condition: service_healthy
 
 volumes:
   zookeeper:
     driver: local
   kafka:
-    driver: local
-  mongodb:
     driver: local

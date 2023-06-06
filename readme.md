@@ -88,7 +88,7 @@ To run the EDPN Backend EDDN Message Listener project, follow these steps:
 1. Install Docker
 2. install Docker-compose
 3. run the following command from the root project folder: `docker compose up -d`
-   - this command will create a stack which contains a Zookeeper, a Kafka and a mongo
+   - this command will create a stack which contains a Zookeeper and a Kafka
    - this command will containerize the code via the dockerfile included, and run it in the stack
 
 ___
