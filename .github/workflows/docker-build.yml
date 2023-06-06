@@ -54,16 +54,25 @@ jobs:
       - name: Get version from build.gradle
         id: get-version
         run: echo "VERSION=$(grep -oP "version\s*=\s*'\K[^']+" build.gradle)" >> $GITHUB_ENV
+        
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
+        
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./Dockerfile
-          push: false
+          push: true
           tags: |
             ${{ github.repository }}:${{ env.VERSION }}
             ${{ github.repository }}:${{ env.VERSION }}
