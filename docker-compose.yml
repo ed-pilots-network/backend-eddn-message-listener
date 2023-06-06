@@ -37,7 +37,7 @@ services:
   eddn-message-listener:
     build:
       context: .
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     environment:
       - KAFKA_URL=kafka:9092
     healthcheck:
