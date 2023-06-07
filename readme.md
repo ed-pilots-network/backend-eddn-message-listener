@@ -9,6 +9,7 @@ This module in particular will consume the EDDN messages and place them on a Kaf
 - [Project Structure](#project-structure)
     - [Code structure](#code-structure)
 - [Installation](#installation)
+- [Local Development](#local-development)
 - [Reporting Issues](#reporting-issues)
 - [Contributing](#contributing)
 - [License](#license)
@@ -87,10 +88,21 @@ To run the EDPN Backend EDDN Message Listener project, follow these steps:
 
 1. Install Docker
 2. install Docker-compose
-3. run the following command from the root project folder: `docker compose up -d`
+3. run the following command from the root project folder: `docker compose -f docker-compose.yml up -d`
    - this command will create a stack which contains a Zookeeper and a Kafka
    - this command will containerize the code via the dockerfile included, and run it in the stack
 
+___
+## Local Development
+to run the stack for local development, follow these steps:
+
+1. Install Docker
+2. install Docker-compose
+3. run the following command from the root project folder: `docker compose -f docker-compose-localdev.yml up -d`. This command will:
+    - create a stack which contains a Zookeeper, a Kafka, and a postgres with the needed ports exposed on localhost
+4. You can now run/debug the project main class (`io.edpn.backend.eddnmessagelistener.EddnMessageListenerApplication`) with spring profile `local`
+
+**keep in mind that the backend application needs to be run separately to process the messages**
 ___
 ## Reporting Issues
 To report an issue with the EDPN Backend project or to request a feature, please open an issue on the project's GitHub repository. You can also join the [discord](https://discord.gg/RrhRmDQD) and make a suggestion there in `ideas` section.
