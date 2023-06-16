@@ -21,6 +21,7 @@ ext {
     lombokVersion = '1.18.28'
     springIntegrationVersion = '6.1.0'
     springKafkaVersion = '3.0.7'
+    prometheusVersion = '1.11.1'
 }
 
 dependencies {
@@ -39,6 +40,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     runtimeOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+    runtimeOnly "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
 
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
@@ -77,4 +79,10 @@ extraJavaModuleInfo {
     automaticModule("jeromq-0.5.3.jar","org.zeromq.jeromq")
     automaticModule("jsr305-3.0.2.jar","jsr305")
     automaticModule("snappy-java-1.1.8.4.jar","snappy.java")
+    automaticModule("simpleclient-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_common-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_common-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_otel-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_otel_agent-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_common-0.16.0.jar","io.prometheus")
 }
