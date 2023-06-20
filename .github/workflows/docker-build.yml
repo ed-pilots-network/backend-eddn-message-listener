@@ -21,6 +21,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
 
   test_build:
+    needs: validation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -42,6 +43,7 @@ jobs:
         run: ./gradlew build
 
   docker:
+    needs: test_build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -62,7 +64,7 @@ jobs:
         with:
           username: ${{ secrets.NEXUS_USER }}
           password: ${{ secrets.NEXUS_PASSWORD }}
-          registry: https://nexus.edpn.io/repository/docker-hosted/
+          registry: https://nexus.edpn.io
           
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
