@@ -64,6 +64,9 @@ jobs:
           password: ${{ secrets.NEXUS_PASSWORD }}
           registry: nexus.edpn.io
           
-      - name: Build Docker image
-        run: |
-          docker buildx build --push --tagelitedangerouspilotnetwork/backend-eddn-message-listener:${{ env.VERSION }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: elitedangerouspilotnetwork/backend-eddn-message-listener:${{ env.VERSION }}
