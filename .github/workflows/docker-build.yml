@@ -71,4 +71,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: elitedangerouspilotnetwork/backend-eddn-message-listener:${{ env.VERSION }}
+          tags: nexus.edpn.io/edpn/backend/eddn-message-listener:${{ env.VERSION }}
