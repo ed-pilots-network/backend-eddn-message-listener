@@ -64,7 +64,7 @@ jobs:
         with:
           username: ${{ secrets.NEXUS_USER }}
           password: ${{ secrets.NEXUS_PASSWORD }}
-          registry: https://nexus.edpn.io
+          registry: nexus.edpn.io
           
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
