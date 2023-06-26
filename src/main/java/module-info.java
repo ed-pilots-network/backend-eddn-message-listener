@@ -13,6 +13,5 @@ module edpn.eddnMessageListener {
     requires kafka.clients;
     requires spring.boot;
     requires spring.integration.core;
-    //requires kafka.clients;
 
 }
