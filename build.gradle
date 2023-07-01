@@ -1,0 +1,96 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.0'
+    id 'org.javamodularity.moduleplugin' version '1.8.12'
+    id "org.gradlex.extra-java-module-info" version "1.4"
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'io.edpn.backend'
+version = '1.0.0'
+description = 'Listener to consume the EDDN messages and store in Kafka'
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://nexus.edpn.io/repository/maven-releases/'
+    }
+    if (version.endsWith('-SNAPSHOT')) { //disallow snapshot dependencies in releases
+        maven {
+            url 'https://nexus.edpn.io/repository/maven-snapshots/'
+        }
+    }
+}
+
+ext {
+    springBootVersion = '3.1.0'
+    jacksonVersion = '2.14.2'
+    lombokVersion = '1.18.28'
+    springIntegrationVersion = '6.1.0'
+    springKafkaVersion = '3.0.7'
+    prometheusVersion = '1.11.1'
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-integration:${springBootVersion}"
+    implementation "org.springframework.integration:spring-integration-http:${springIntegrationVersion}"
+    implementation "org.springframework.integration:spring-integration-zeromq:${springIntegrationVersion}"
+    implementation "org.springframework.kafka:spring-kafka:${springKafkaVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    runtimeOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
+    runtimeOnly "io.micrometer:micrometer-registry-prometheus:${prometheusVersion}"
+
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+
+test {
+    systemProperty "file.encoding", "utf-8"
+    useJUnitPlatform()
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).tap {
+    configureEach {
+        options.encoding = 'UTF-8'
+    }
+}
+
+
+extraJavaModuleInfo {
+    automaticModule("LatencyUtils-2.0.3.jar", "LatencyUtils")
+    automaticModule("HdrHistogram-2.1.12.jar", "HdrHistogram")
+    automaticModule("spring-retry-2.0.1.jar","spring.retry")
+    automaticModule("kafka-clients-3.4.0.jar", "kafka.clients")
+    automaticModule("dependency-management-plugin-1.1.0.jar","dependency.management.plugin")
+    automaticModule("jnacl-1.0.0.jar","eu.neilalexander.jnacl")
+    automaticModule("jeromq-0.5.3.jar","org.zeromq.jeromq")
+    automaticModule("jsr305-3.0.2.jar","jsr305")
+    automaticModule("snappy-java-1.1.8.4.jar","snappy.java")
+    automaticModule("simpleclient-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_common-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_common-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_otel-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_otel_agent-0.16.0.jar","io.prometheus")
+    automaticModule("simpleclient_tracer_common-0.16.0.jar","io.prometheus")
+}
