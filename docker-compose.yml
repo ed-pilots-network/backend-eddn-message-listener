@@ -42,7 +42,7 @@ services:
       - KAFKA_URL=kafka:9092
       - EDDN_URI=tcp://eddn.edcd.io:9500:9500
     healthcheck:
-      test: "curl --fail --silent eddn-message-listener:8080/actuator/health | grep UP || exit 1"
+      test: "wget -q0- http://eddn-message-listener:8080/actuator/health | grep UP || exit 1"
       interval: 20s
       timeout: 5s
       retries: 5
