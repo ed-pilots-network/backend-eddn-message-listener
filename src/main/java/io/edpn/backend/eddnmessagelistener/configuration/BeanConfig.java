@@ -2,6 +2,8 @@ package io.edpn.backend.eddnmessagelistener.configuration;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.edpn.backend.eddnmessagelistener.domain.KafkaStreamProperties;
+import io.edpn.backend.eddnmessagelistener.infrastructure.kafka.EventRouterStreamProcessor;
 import io.edpn.backend.eddnmessagelistener.infrastructure.kafka.KafkaTopicHandler;
 import io.edpn.backend.eddnmessagelistener.infrastructure.zmq.EddnMessageHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,6 +22,15 @@ public class BeanConfig {
                                                  KafkaTopicHandler kafkaTopicHandler,
                                                  KafkaTemplate<String, JsonNode> jsonNodekafkaTemplate) {
         return new EddnMessageHandler(taskExecutor, retryTemplate, objectMapper, kafkaTopicHandler, jsonNodekafkaTemplate);
+    }
+
+
+    @Bean
+    public EventRouterStreamProcessor eventRouterStreamProcessor(
+            KafkaStreamProperties kafkaStreamProperties,
+            KafkaTopicHandler kafkaTopicHandler,
+            ObjectMapper objectMapper) {
+        return new EventRouterStreamProcessor(kafkaStreamProperties, kafkaTopicHandler, objectMapper);
     }
 
     @Bean
