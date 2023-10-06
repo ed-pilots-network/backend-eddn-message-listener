@@ -37,6 +37,7 @@ public class EventRouterStreamProcessor {
                         JsonNode rootNode = objectMapper.readTree(value);
                         String targetTopic = Optional.ofNullable(rootNode.get("message").get("event"))
                                 .map(JsonNode::asText)
+                                .map(String::toLowerCase)
                                 .map(eventValue -> INPUT_TOPIC + "_" + eventValue)
                                 .orElse(INPUT_TOPIC + "_unknown-journal-event");
 
