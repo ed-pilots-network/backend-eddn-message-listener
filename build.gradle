@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'io.edpn.backend'
-version = '1.0.1-SNAPSHOT'
+version = '1.1.1-SNAPSHOT'
 description = 'Listener to consume the EDDN messages and store in Kafka'
 compileJava.options.encoding = 'UTF-8'
 
